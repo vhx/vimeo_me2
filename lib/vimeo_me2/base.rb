@@ -4,9 +4,10 @@ module VimeoMe2
 
     attr_reader :client
 
-    def initialize token
+    def initialize(token, version = '3.2')
       @token = token
       @client = VimeoMe2::Http::HttpRequest.new(token)
+      @version = version
       get_object
     end
 
@@ -29,7 +30,7 @@ module VimeoMe2
         # https://developer.vimeo.com/api/changelog#34
         @client.add_header(
           'Accept',
-          'application/vnd.vimeo.*+json;version=3.2',
+          "application/vnd.vimeo.*+json;version=#{@version}"
         )
         @client.add_headers(headers)
         @client.add_queries(query)
